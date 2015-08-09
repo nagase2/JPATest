@@ -1,0 +1,115 @@
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		  }
+    }
+    dependencies {
+      
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+		classpath 'org.springframework:springloaded:1.2.3.RELEASE'
+		classpath "com.moowork.gradle:gradle-grunt-plugin:0.9"
+    
+        classpath "com.bmuschko:gradle-cargo-plugin:2.1.1"
+        
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: "com.moowork.grunt"
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply plugin: "sonar-runner"
+
+//static source code check tools
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+checkstyle.toolVersion = '6.7'
+apply plugin: 'pmd'
+apply plugin: "sonar-runner"
+apply plugin: "com.bmuschko.cargo"
+
+
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+	jcenter() //sonar
+}
+springBoot {
+	mainClass = "com.example.App2"
+}
+bootRepackage {
+	mainClass = 'com.example.App2'
+}
+
+bootRun {
+  addResources = false
+}
+ 
+  
+dependencies {
+  def cargoVersion = '1.4.10'
+  cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+        "org.codehaus.cargo:cargo-ant:$cargoVersion"
+  cargo "org.wildfly:wildfly-controller-client:8.2.0.Final"
+  compile("org.springframework.boot:spring-boot-starter-actuator")
+  
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile 'org.projectlombok:maven-lombok-plugin:0.9.3.1'
+	compile "org.projectlombok:lombok:1.16.2"
+	compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
+	compile 'com.h2database:h2'
+	compile 'org.lazyluke:log4jdbc-remix:0.2.7'
+	compile 'org.springframework.boot:spring-boot-maven-plugin:1.2.3.RELEASE'
+	compile 'org.webjars:bootstrap:3.2.0'
+	compile 'org.flywaydb:flyway-core'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity3'
+  
+
+	compile 'javax.servlet:jstl:1.2'
+	compile "org.codehaus.groovy:groovy-all:2.3.11"
+	compile 'org.hudsonci.plugins:dry:2.28'
+  
+    compile 'org.thymeleaf:thymeleaf-spring4'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    //compile 'javax.servlet:javax.servlet-api'
+	
+	
+	// Embedded Tomcat
+	providedRuntime "org.springframework.boot:spring-boot-starter-tomcat"
+	providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	providedRuntime "org.apache.tomcat:tomcat-jdbc"
+	providedRuntime "org.apache.tomcat:tomcat-juli"
+	
+   // compile("org.springframework.boot:spring-boot-starter-actuator")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile 'org.springframework.security:spring-security-test:4.0.1.RELEASE'
+    compile 'org.springframework:spring-test:4.1.7.RELEASE'
+    
+    testCompile("junit:junit")
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.3'
+    testCompile 'org.spockframework:spock-spring:1.0-groovy-2.3'
+    
+    
+	
+}
+
+
+
+
+  
